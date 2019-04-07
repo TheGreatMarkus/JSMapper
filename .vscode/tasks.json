@@ -5,7 +5,7 @@
         "command": "explorer.exe"
     },
     "args": [
-        "index.html"
+        "src\\index.html"
     ],
     "problemMatchers": []
 }

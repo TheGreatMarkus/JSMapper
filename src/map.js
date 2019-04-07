@@ -3,6 +3,8 @@ var locations = [];
 var markers = [];
 var circles = [];
 
+const radius = 1000;
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
@@ -11,30 +13,19 @@ function initMap() {
     });
 
     google.maps.event.addListener(map, 'click', function (event) {
-        placeLocation(event.latLng);
+        var location = {lat: event.latLng.lat(), lng: event.latLng.lng()}
+        placeLocation(location, "Placed");
     });
 
     google.maps.event.addListener(map, 'rightclick', function (event) {
         removeLocation();
     });
+
     var data = getData();
     console.log(data);
+    
     for (let i = 0; i < data.length; i++) {
-        var marker = new google.maps.Marker({
-            position: data[i],
-            map: map,
-            title: ""
-        });
-        new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: data[i],
-            radius: 1000
-        });
+        placeLocation(data[i], ""+i);
     }
 }
 
@@ -60,10 +51,12 @@ function removeLocation(){
     circles.pop().setMap(null);
 }
 
-function placeLocation(location) {
+function placeLocation(location, label) {
     var marker = new google.maps.Marker({
         position: location,
-        map: map
+        map: map,
+        title: location.lat + ", " + location.lng,
+        label: label
     });
     var circle = new google.maps.Circle({
         strokeColor: '#FF0000',
@@ -73,9 +66,9 @@ function placeLocation(location) {
         fillOpacity: 0.35,
         map: map,
         center: location,
-        radius: 1000
+        radius: radius
     });
-    locations.push(location.lat() + ", " + location.lng());
+    locations.push(location.lat + ", " + location.lng);
     markers.push(marker);
     circles.push(circle);
     
