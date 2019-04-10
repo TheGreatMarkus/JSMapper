@@ -1,2 +1,2 @@
 # JSMapper
-Small tool to map points on a map using Google's Map API
+Small tool to pick points on a map using the JS Google Maps API
